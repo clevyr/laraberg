@@ -29,6 +29,7 @@
         "laravel": {
             "providers": "VanOns\\Laraberg\\LarabergServiceProvider"
         }
-    }
+    },
+    "minimum-stability": "dev"
 
 }
