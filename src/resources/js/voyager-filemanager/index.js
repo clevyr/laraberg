@@ -14,7 +14,8 @@ export default function (config) {
 
             this.root = document.querySelector('#VoyagerFileManager')
 
-            ReactDOM.render(<FileManager current_folder={ config.current_folder }
+            ReactDOM.render(<FileManager multipl={ this.props.multiple }
+                                         current_folder={ config.current_folder }
                                          base_path={ config.base_path }
                                          csrf_token={ config.csrf_token }
                                          files_route={ config.files_route }
@@ -37,10 +38,10 @@ export default function (config) {
         onSelect = (files) => {
             const { multiple, onSelect } = this.props
 
-            const mediaItems = []
+            const mediaItems = this.state.media
             let media = []
 
-            if (files.length > 1) {
+            if (multiple) {
                 Object.keys(files).forEach((key) => {
                     const item = files[key]
 
@@ -57,10 +58,10 @@ export default function (config) {
             }
 
             if (multiple) {
-                this.setState({ media: mediaItems })
+                this.setState({ media: mediaItems }, () => onSelect(this.state.media))
+            } else {
+                onSelect(media)
             }
-
-            onSelect(multiple ? this.state.media : media)
 
             this.closeVM()
         }
